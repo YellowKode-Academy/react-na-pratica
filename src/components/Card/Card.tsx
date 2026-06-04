@@ -1,3 +1,4 @@
+import { useTheme } from '../../context/ThemeContext'
 import type { Card as CardType, ColumnId } from '../../types'
 
 interface CardProps {
@@ -19,17 +20,21 @@ const priorityLabels: Record<CardType['priority'], string> = {
 }
 
 export function Card({ card, onDelete, onMove }: CardProps) {
+  const { theme } = useTheme()
   const canMove = card.columnId !== 'done'
+  const bg = theme === 'dark' ? '#374151' : 'white'
+  const border = theme === 'dark' ? '1px solid #4b5563' : '1px solid #e5e7eb'
+  const textMuted = theme === 'dark' ? '#9ca3af' : '#6b7280'
 
   return (
     <div
       data-testid="card"
       style={{
-        border: '1px solid #e5e7eb',
+        border,
         borderRadius: '8px',
         padding: '12px',
         marginBottom: '8px',
-        background: 'white',
+        background: bg,
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -50,13 +55,13 @@ export function Card({ card, onDelete, onMove }: CardProps) {
       </div>
 
       {card.description && (
-        <p style={{ margin: '6px 0', fontSize: '13px', color: '#6b7280' }}>
+        <p style={{ margin: '6px 0', fontSize: '13px', color: textMuted }}>
           {card.description}
         </p>
       )}
 
       {card.assignee && (
-        <div style={{ fontSize: '12px', color: '#9ca3af', marginTop: '4px' }}>
+        <div style={{ fontSize: '12px', color: textMuted, marginTop: '4px' }}>
           Responsável: <strong>{card.assignee}</strong>
         </div>
       )}
@@ -67,7 +72,7 @@ export function Card({ card, onDelete, onMove }: CardProps) {
             <span
               key={tag}
               style={{
-                background: '#e5e7eb',
+                background: theme === 'dark' ? '#4b5563' : '#e5e7eb',
                 borderRadius: '4px',
                 padding: '1px 6px',
                 fontSize: '11px',
