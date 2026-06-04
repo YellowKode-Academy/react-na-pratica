@@ -1,5 +1,5 @@
 import { useBoardStore } from '../store/boardStore'
-import type { Card, ColumnId, Priority } from '../types'
+import type { ColumnId, Priority } from '../types'
 
 export function useBoard() {
   const {
