@@ -1,3 +1,4 @@
+import { useTheme } from '../../context/ThemeContext'
 import { Card } from '../Card/Card'
 import type { Card as CardType, ColumnId } from '../../types'
 
@@ -16,6 +17,9 @@ const columnColors: Record<ColumnId, string> = {
 }
 
 export function Column({ id, title, cards, onDeleteCard, onMoveCard }: ColumnProps) {
+  const { theme } = useTheme()
+  const bg = theme === 'dark' ? '#1f2937' : '#f9fafb'
+
   return (
     <div
       data-testid={`column-${id}`}
@@ -23,7 +27,7 @@ export function Column({ id, title, cards, onDeleteCard, onMoveCard }: ColumnPro
         flex: '1',
         minWidth: '280px',
         maxWidth: '360px',
-        background: '#f9fafb',
+        background: bg,
         borderRadius: '12px',
         padding: '16px',
       }}
