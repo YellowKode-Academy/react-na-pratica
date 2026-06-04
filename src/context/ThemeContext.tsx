@@ -8,6 +8,11 @@ interface ThemeContextValue {
 
 export const ThemeContext = createContext<ThemeContextValue | null>(null)
 
+const themeStyles: Record<Theme, React.CSSProperties> = {
+  light: { backgroundColor: '#f9fafb', color: '#111827', minHeight: '100vh' },
+  dark:  { backgroundColor: '#111827', color: '#f9fafb', minHeight: '100vh' },
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
     return (localStorage.getItem('theme') as Theme) ?? 'light'
@@ -23,7 +28,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div data-theme={theme}>{children}</div>
+      <div data-theme={theme} style={themeStyles[theme]}>
+        {children}
+      </div>
     </ThemeContext.Provider>
   )
 }
